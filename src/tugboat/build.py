@@ -6,6 +6,7 @@ from typing import List
 
 from .utils import is_windows, stop_if_docker_not_installed
 
+
 def _copy_build_context_to_temp(build_context: str) -> str | None:
     if not is_windows():
         return None
@@ -19,6 +20,7 @@ def _copy_build_context_to_temp(build_context: str) -> str | None:
         else:
             shutil.copy2(item, dest)
     return tmp.name
+
 
 def _build_image(
     dockerfile: str,
@@ -62,6 +64,7 @@ def _build_image(
         if tmp is not None:
             tmp.cleanup()
 
+
 def build(
     dockerfile: str = Path(".") / "Dockerfile",
     image_name: str = "tugboat",
@@ -72,7 +75,7 @@ def build(
     push: bool = False,
     dh_username: str | None = None,
     dh_password: str | None = None,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> str:
     """Build a Docker image from a Dockerfile"""
     stop_if_docker_not_installed()
@@ -86,7 +89,9 @@ def build(
             check=True,
         )
         if login_result.returncode != 0:
-            raise RuntimeError(f"Docker login failed with status: {login_result.returncode}")
+            raise RuntimeError(
+                f"Docker login failed with status: {login_result.returncode}"
+            )
     if dh_username is None:
         repository = image_name
     else:
@@ -99,6 +104,6 @@ def build(
         build_args=build_args,
         build_context=build_context,
         push=push,
-        verbose=verbose
+        verbose=verbose,
     )
     return f"{repository}:{tag}"

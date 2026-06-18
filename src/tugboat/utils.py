@@ -7,21 +7,28 @@ import platform
 import shutil
 from typing import List
 
+
 class DockerNotFoundError(Exception):
     pass
+
 
 def _run_in_thread(fn, *args, **kwargs):
     """Execute a function in a separate thread"""
     with ThreadPoolExecutor(max_workers=1) as executor:
         return executor.submit(fn, *args, **kwargs).result()
 
+
 def is_windows() -> bool:
     return platform.system() == "Windows"
+
 
 def stop_if_docker_not_installed() -> None:
     """Ensure Docker is installed"""
     if not shutil.which("docker"):
-        raise DockerNotFoundError("Visit https://docs.docker.com/get-docker/ to get started!")
+        raise DockerNotFoundError(
+            "Visit https://docs.docker.com/get-docker/ to get started!"
+        )
+
 
 # `generate` is a Click (https://click.palletsprojects.com/en/stable/)
 # cli object. The underlying `generate` function is stored at `generate.callback`
@@ -39,7 +46,7 @@ def _generate(
     question_answer: str = "yes",
     auto_select: bool = False,
     experimental_features: List[str] = [],
-    project_path: str = os.curdir
+    project_path: str = os.curdir,
 ) -> None:
     """Recreate an internal API for pigar's `generate` CLI function"""
     kwargs = dict(
@@ -56,7 +63,7 @@ def _generate(
         question_answer=question_answer,
         auto_select=auto_select,
         experimental_features=experimental_features,
-        project_path=project_path
+        project_path=project_path,
     )
     # Run in separate thread so this does NOT fail when run in Jupyter environment
     _run_in_thread(generate_cli.callback, **kwargs)

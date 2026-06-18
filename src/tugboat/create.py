@@ -8,7 +8,12 @@ from .utils import _generate
 PY_VERSION = f"{sys.version_info.major}.{sys.version_info.minor}"
 DEFAULT_IMAGE = f"python:{PY_VERSION}-slim"
 
-def _dockerfile(project_name: str | None = None, project: str = str(Path(".").resolve()), FROM: str | None = None) -> str:
+
+def _dockerfile(
+    project_name: str | None = None,
+    project: str = str(Path(".").resolve()),
+    FROM: str | None = None,
+) -> str:
     if project_name is None:
         project_dir = f"/{Path(project).name}"
     else:
@@ -24,6 +29,7 @@ RUN uv sync --all-groups --all-extras
 RUN uv add -r requirements-tugboat.txt"""
     return dock
 
+
 def _dockerignore(project: str, exclude: List[str] | str | None = None) -> None:
     if not isinstance(exclude, List) and exclude:
         exclude = [exclude]
@@ -34,12 +40,13 @@ def _dockerignore(project: str, exclude: List[str] | str | None = None) -> None:
     with open(dockerignore_path, "w") as path:
         path.writelines(f"{item}\n" for item in exclude)
 
+
 def create(
     project: str = str(Path(".").resolve()),
     FROM: str | None = None,
     exclude: List[str] | str | None = None,
     verbose: bool = False,
-    **kwargs
+    **kwargs,
 ) -> None:
     project = os.path.abspath(project)
     # Scan for dependencies and generate requirements.txt

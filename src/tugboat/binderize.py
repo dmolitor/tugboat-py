@@ -6,27 +6,26 @@ import re
 BADGE_URL = "https://mybinder.org/badge_logo.svg"
 DEFAULT_IMAGE = "rocker/binder:4"
 
+
 def _use_badge(
     label: str,
     href: str,
     image_url: str,
     readme: str | Path = "README.md",
-    add_readme_badge: bool = True
+    add_readme_badge: bool = True,
 ) -> str:
     readme = Path(readme)
     badge = f"[![{label}]({image_url})]({href})"
     start = "<!-- badges: start -->"
     end = "<!-- badges: end -->"
-    instructions = (
-        f"{start}\n"
-        f"{badge}\n"
-        f"{end}"
-    )
+    instructions = f"{start}\n" f"{badge}\n" f"{end}"
+
     # Copy instructions to the clipboard and also print them
     def copy_instructions() -> None:
         pyperclip.copy(instructions)
         print("Add the following to your README.md file:\n\n" + instructions)
         print("\nCopied to clipboard.")
+
     # Determine whether to modify README.md or just return instructions
     if not add_readme_badge:
         return copy_instructions()
@@ -46,6 +45,7 @@ def _use_badge(
     print(f"Added badge to {readme}")
     return badge
 
+
 def _binder_dockerfile() -> str:
     dock = f"""FROM {DEFAULT_IMAGE}""" + """
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
@@ -59,13 +59,14 @@ RUN uv sync --all-groups --all-extras
 RUN uv add -r requirements-tugboat.txt"""
     return dock
 
+
 def binderize(
     project: Path | str = Path("."),
     branch: str = "main",
     urlpath: str = "rstudio",
     add_readme_badge: bool = True,
     overwrite: bool = True,
-    verbose: bool = False
+    verbose: bool = False,
 ) -> None:
     # Create repo object and extract url, username, repo name, etc.
     repo = Repository(project)
@@ -91,10 +92,9 @@ def binderize(
         href=binder_url,
         image_url=BADGE_URL,
         readme=local_repo / "README.md",
-        add_readme_badge=add_readme_badge
+        add_readme_badge=add_readme_badge,
     )
     # Give the user final instructions
     print("Your repository has been configured for Binder.")
     print("[x] Commit and push all changes")
     print("[x] Launch Binder at: ", binder_url)
-
