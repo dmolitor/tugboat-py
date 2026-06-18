@@ -23,8 +23,13 @@ code and the necessary software to reproduce your findings.
 
 ## Installation
 
-Install tugboat from GitHub:
-```r
+Install tugboat from PyPI:
+```python
+pip install tugboat-py
+```
+
+or install tugboat from GitHub:
+```python
 pip install git+https://github.com/dmolitor/tugboat-py
 ```
 
