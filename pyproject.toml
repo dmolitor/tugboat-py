@@ -1,5 +1,5 @@
 [project]
-name = "tugboat"
+name = "tugboat-py"
 version = "0.1.0"
 description = "Simple utilities to generate a Dockerfile from a directory or project, build the corresponding Docker image, push the image to DockerHub, and publicly share the project via Binder."
 readme = "README.md"
@@ -20,3 +20,11 @@ tugboat-py = "tugboat:main"
 [build-system]
 requires = ["uv_build>=0.9.22,<0.10.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "tugboat"
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+]
