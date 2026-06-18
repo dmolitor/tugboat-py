@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Daniel Molitor", email = "molitdj97@gmail.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "pigar>=2.2.0",
     "pygit2>=1.19.3",
