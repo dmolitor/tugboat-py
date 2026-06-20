@@ -2,8 +2,9 @@
 <a href="https://posit-dev.github.io/great-docs/">
 <img src="assets/tugboat-logo-py.png" alt="tugboat" width="350">
 </a>
-<p align="center"><b>tugboat<b></p>
 </p>
+
+# tugboat
 
 <!-- badges: start -->
 <!-- badges: end -->
