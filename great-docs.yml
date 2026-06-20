@@ -1,0 +1,121 @@
+# Great Docs Configuration
+# See https://posit-dev.github.io/great-docs/user-guide/configuration.html
+
+# Module Name (optional)
+# ----------------------
+# Set this if your importable module name differs from the project name.
+# Example: project 'py-yaml12' with module name 'yaml12'
+module: tugboat
+
+# Docstring Parser
+# ----------------
+# The docstring format used in your package (numpy, google, or sphinx)
+parser: numpy
+
+# Dynamic Introspection
+# ---------------------
+# Use runtime introspection for more accurate documentation (default: true)
+# Set to false if your package has cyclic alias issues (e.g., PyO3/Rust bindings)
+dynamic: true
+
+# Display Name
+# ------------
+# Custom display name for your package in the site navbar/title.
+# If not provided, uses the actual package name (e.g., 'my_package' or 'my-package').
+# Use this to provide a marketing/presentation name (e.g., 'My Package').
+display_name: tugboat
+
+# Hero Section
+# ------------
+# The large header area on the homepage with logo, name, and tagline.
+hero:
+  enabled: true
+  tagline: "Quickly turn your analysis directory into a Docker image."
+  # starfield: true
+
+# API Discovery Settings
+# ----------------------
+# Exclude items from auto-documentation
+# exclude:
+#   - InternalClass
+#   - helper_function
+
+# Logo & Favicon
+# ---------------
+# Point to a single logo file (replaces the text title in the navbar):
+logo: assets/tugboat-logo-py.png
+#
+# For light/dark variants:
+# logo:
+#   light: assets/tugboat-logo-py.png
+#   dark: assets/tugboat-logo-py.png
+#   show_title: false
+#
+# To show the text title alongside the logo, add: show_title: true
+
+# Author Information
+# ------------------
+# Author metadata for display in the landing page sidebar
+# You can add additional fields: github, orcid, affiliation, homepage
+authors:
+  - name: Daniel Molitor
+    role: Author
+    # affiliation: 
+    email: molitdj97@gmail.com
+    github: https://github.com/dmolitor 
+    # orcid: 
+    homepage: https://dmolitor.com
+
+# API Reference Structure
+# -----------------------
+# Customize the sections below to organize your API documentation.
+# - Reorder items within a section to change their display order
+# - Move items between sections or create new sections
+# - Use 'members: false' to exclude methods from documentation
+# - Add 'desc:' to sections for descriptions
+
+reference:
+  # - title: Constants
+  #   desc: Module-level constants and data
+  #   contents:
+  #     - binderize.BADGE_URL
+  #     - binderize.DEFAULT_IMAGE
+  #     - create.DEFAULT_IMAGE
+  #     - create.PY_VERSION
+
+  - title: All functions
+    desc: Functionality for building and developing Docker images.
+    contents:
+      - build.build
+      - create.create
+      - binderize.binderize
+
+# Site URL
+# --------
+# Canonical address of the deployed documentation site.
+# Required for subdirectory deployments, skills page install commands,
+# .well-known/ discovery, and sitemaps.
+# site_url: "https://your-org.github.io/your-package/"
+
+# Site Settings
+# -------------
+site:
+  theme: journal              # Quarto theme (default: flatly)
+  toc: true                  # Show table of contents (default: true)
+  toc-depth: 2               # TOC heading depth (default: 2)
+  # toc-title: On this page    # TOC title (default: "On this page")
+
+# Jupyter Kernel
+# --------------
+# Jupyter kernel to use for executing code cells in .qmd files.
+# This is set at the project level so it applies to all pages, including
+# auto-generated API reference pages. Can be overridden in individual .qmd
+# file frontmatter if needed for special cases.
+jupyter: python3
+
+# CLI Documentation
+# -----------------
+# cli:
+#   enabled: true              # Enable CLI documentation
+#   module: my_package.cli     # Module containing Click commands
+#   name: cli                  # Name of the Click command object
