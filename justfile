@@ -50,6 +50,12 @@ publish-pypi: check-uv
 publish-testpypi: check-uv
   uv publish --publish-url https://test.pypi.org/legacy/ --project {{justfile_directory()}} --token {{TEST_PYPI_TOKEN}}
 
+# Preview changes to website
+preview-docs:
+  @uv run which great-docs
+  uv run great-docs build
+  uv run great-docs preview
+
 # Run tests with PyTest
 # test *TEST_ARGS: check-uv
 #   uv run pytest {{TEST_ARGS}}
