@@ -5,4 +5,4 @@ from .binderize import binderize
 # read version from installed package
 from importlib.metadata import version
 
-__version__ = version(__name__)
+__version__ = version("tugboat-py")
