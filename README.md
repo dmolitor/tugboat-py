@@ -1,4 +1,9 @@
-# tugboat <!-- <img src='man/figures/logo-no-bg.png' align="right" height="140"/> -->
+<p align="center">
+<a href="https://posit-dev.github.io/great-docs/">
+<img src="assets/tugboat-logo-py.png" alt="tugboat" width="350">
+</a>
+<p align="center"><b>tugboat<b></p>
+</p>
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -122,7 +127,7 @@ the image and then push to DockerHub, you can make a couple small additions
 to the code above:
 ```python
 import os
-import dotenv
+from dotenv import load_dotenv
 from tugboat import build
 
 load_dotenv()
@@ -130,7 +135,6 @@ load_dotenv()
 build(
     dockerfile="./sub-directory",
     build_context="./sub-directory",
-    image_name="awesome_analysis"
     image_name="awesome_analysis",
     push=True,
     dh_username=os.environ["DOCKERHUB_USERNAME"],

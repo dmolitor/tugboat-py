@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 import sys
-from typing import List
+from typing import Any, List
 
 from .utils import _generate
 
@@ -46,8 +46,38 @@ def create(
     FROM: str | None = None,
     exclude: List[str] | str | None = None,
     verbose: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> None:
+    """
+    Generate a Dockerfile and .dockerignore from an analysis directory.
+
+    Scans `project` for Python dependencies using pigar, writes them to
+    a `requirements.txt` files, and generates a Dockerfile that copies the
+    analysis directory into the image and installs those dependencies with uv.
+    Since tugboat uses uv under the hood, it should be immediately compatible
+    with any project that is already set up to use uv.
+
+    Parameters
+    ----------
+    project : str, default current working directory
+        Path to the analysis directory to generate a Dockerfile from.
+    FROM : str or None, default None
+        Base Docker image to use in the generated Dockerfile's ``FROM``
+        instruction. If None, defaults to ``python:{version}-slim`` using
+        the running Python's version.
+    exclude : list of str, str, or None, default None
+        File(s) or sub-directorie(s) to exclude from the Docker image via
+        the generated ``.dockerignore``.
+    verbose : bool, default False
+        Whether to print the generated Dockerfile contents.
+    **kwargs : Any
+        Additional keyword arguments forwarded to pigar's dependency-scanning
+        ``generate`` function (e.g. `dry_run`, `index_url`).
+
+    Returns
+    -------
+    None
+    """
     project = os.path.abspath(project)
     # Scan for dependencies and generate requirements.txt
     _generate(project_path=project, **kwargs)

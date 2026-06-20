@@ -18,11 +18,11 @@ def _run_in_thread(fn, *args, **kwargs):
         return executor.submit(fn, *args, **kwargs).result()
 
 
-def is_windows() -> bool:
+def _is_windows() -> bool:
     return platform.system() == "Windows"
 
 
-def stop_if_docker_not_installed() -> None:
+def _stop_if_docker_not_installed() -> None:
     """Ensure Docker is installed"""
     if not shutil.which("docker"):
         raise DockerNotFoundError(

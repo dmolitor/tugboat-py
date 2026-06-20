@@ -1,6 +1,6 @@
 [project]
 name = "tugboat-py"
-version = "0.1.0"
+version = "0.1.1"
 description = "Simple utilities to generate a Dockerfile from a directory or project, build the corresponding Docker image, push the image to DockerHub, and publicly share the project via Binder."
 readme = "README.md"
 authors = [
@@ -8,14 +8,15 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "great-docs>=0.14.0",
     "pigar>=2.2.0",
     "pygit2>=1.19.3",
     "pyperclip>=1.11.0",
     "python-dotenv>=1.2.2",
 ]
 
-[project.scripts]
-tugboat-py = "tugboat:main"
+# [project.scripts]
+# tugboat-py = "tugboat:main"
 
 [build-system]
 requires = ["uv_build>=0.9.22,<0.10.0"]

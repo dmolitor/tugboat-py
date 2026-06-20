@@ -21,10 +21,11 @@ def _use_badge(
     instructions = f"{start}\n" f"{badge}\n" f"{end}"
 
     # Copy instructions to the clipboard and also print them
-    def copy_instructions() -> None:
+    def copy_instructions() -> str:
         pyperclip.copy(instructions)
         print("Add the following to your README.md file:\n\n" + instructions)
         print("\nCopied to clipboard.")
+        return badge
 
     # Determine whether to modify README.md or just return instructions
     if not add_readme_badge:
@@ -68,6 +69,39 @@ def binderize(
     overwrite: bool = True,
     verbose: bool = False,
 ) -> None:
+    """
+    Prepare a GitHub repository to be launched via Binder.
+
+    Writes a ``.binder/Dockerfile`` and inserts a Binder launch badge into
+    the project's README.md (or copies the badge snippet to the clipboard
+    if the README has no badge section to insert into).
+
+    Parameters
+    ----------
+    project : Path or str, default Path(".")
+        Path to the local Git repository to binderize. Must be a GitHub repository.
+    branch : str, default "main"
+        Branch to point the Binder launch link at.
+    urlpath : str, default "rstudio"
+        URL path Binder should open to on launch (e.g. "rstudio", "lab").
+    add_readme_badge : bool, default True
+        Whether to attempt to insert the Binder badge into the project's
+        README.md. If False, the badge snippet is copied to the clipboard
+        and printed instead.
+    overwrite : bool, default True
+        Whether to overwrite an existing ``.binder/Dockerfile``.
+    verbose : bool, default False
+        Whether to print the generated Binder Dockerfile contents.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    ValueError
+        If the repository is not a GitHub repository.
+    """
     # Create repo object and extract url, username, repo name, etc.
     repo = Repository(project)
     git_remote = repo.remotes["origin"].url

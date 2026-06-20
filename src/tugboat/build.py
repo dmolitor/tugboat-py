@@ -4,11 +4,11 @@ import subprocess as sp
 import tempfile
 from typing import List
 
-from .utils import is_windows, stop_if_docker_not_installed
+from .utils import _is_windows, _stop_if_docker_not_installed
 
 
 def _copy_build_context_to_temp(build_context: str) -> str | None:
-    if not is_windows():
+    if not _is_windows():
         return None
     tmp = tempfile.TemporaryDirectory()
     tmp_path = Path(tmp.name)
@@ -51,9 +51,9 @@ def _build_image(
         ]
         if build_args:
             exec_args.extend(build_args)
-        exec_args.append(str(build_context))
         if push:
             exec_args.append("--push")
+        exec_args.append(str(build_context))
         if verbose:
             print("Building:")
             print(" ".join(exec_args))
@@ -66,7 +66,7 @@ def _build_image(
 
 
 def build(
-    dockerfile: str = Path(".") / "Dockerfile",
+    dockerfile: str | Path = Path(".") / "Dockerfile",
     image_name: str = "tugboat",
     tag: str = "latest",
     platforms: List[str] | str = ["linux/amd64", "linux/arm64"],
@@ -77,8 +77,48 @@ def build(
     dh_password: str | None = None,
     verbose: bool = False,
 ) -> str:
-    """Build a Docker image from a Dockerfile"""
-    stop_if_docker_not_installed()
+    """
+    Build a Docker image from a Dockerfile.
+
+    Parameters
+    ----------
+    dockerfile : str or Path, default ``Path(".") / "Dockerfile"``
+        Path to the Dockerfile to build.
+    image_name : str, default "tugboat"
+        Name to assign to the built Docker image.
+    tag : str, default "latest"
+        Tag to assign to the built Docker image.
+    platforms : list of str or str, default ["linux/amd64", "linux/arm64"]
+        One or more target platforms to build the image for.
+    build_args : list of str or None, default None
+        Additional arguments to pass through to ``docker buildx build``.
+    build_context : str, default current working directory
+        Path to the build context directory.
+    push : bool, default False
+        Whether to push the built image to DockerHub. If True, both
+        `dh_username` and `dh_password` must be provided.
+    dh_username : str or None, default None
+        DockerHub username. Required if `push` is True.
+    dh_password : str or None, default None
+        DockerHub password. Required if `push` is True.
+    verbose : bool, default False
+        Whether to print the underlying ``docker buildx build`` command
+        before executing it.
+
+    Returns
+    -------
+    str
+        The full image reference, in the form ``{repository}:{tag}``.
+
+    Raises
+    ------
+    DockerNotFoundError
+        If Docker is not installed.
+    RuntimeError
+        If `push` is True but `dh_username` or `dh_password` is missing,
+        if the Docker login fails, or if the build fails.
+    """
+    _stop_if_docker_not_installed()
     if push:
         if dh_username is None or dh_password is None:
             raise RuntimeError("Both `dh_username` and `dh_password` must be provided")
