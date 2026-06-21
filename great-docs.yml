@@ -62,9 +62,13 @@ authors:
     role: Author
     # affiliation: 
     email: molitdj97@gmail.com
-    github: https://github.com/dmolitor 
+    github: dmolitor 
     # orcid: 
     homepage: https://dmolitor.com
+
+# AI Skills section
+skill:
+  enabled: true
 
 # API Reference Structure
 # -----------------------
