@@ -84,7 +84,7 @@ reference:
   #     - create.PY_VERSION
 
   - title: All functions
-    desc: Functionality for building and developing Docker images.
+    desc: Functionality for creating and building Docker images.
     contents:
       - build.build
       - create.create
@@ -95,15 +95,20 @@ reference:
 # Canonical address of the deployed documentation site.
 # Required for subdirectory deployments, skills page install commands,
 # .well-known/ discovery, and sitemaps.
-# site_url: "https://your-org.github.io/your-package/"
+site_url: "https://dmolitor.com/tugboat-py/"
 
 # Site Settings
 # -------------
 site:
-  theme: journal              # Quarto theme (default: flatly)
+  theme: minty              # Quarto theme (default: flatly)
   toc: true                  # Show table of contents (default: true)
   toc-depth: 2               # TOC heading depth (default: 2)
   # toc-title: On this page    # TOC title (default: "On this page")
+
+# Dark Mode Toggle
+# ----------------
+# Enable/disable the dark mode toggle in navbar (default: true)
+dark_mode_toggle: false
 
 # Jupyter Kernel
 # --------------

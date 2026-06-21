@@ -82,7 +82,7 @@ def build(
 
     Parameters
     ----------
-    dockerfile : str or Path, default ``Path(".") / "Dockerfile"``
+    dockerfile : str or Path, default Path(".") / "Dockerfile"
         Path to the Dockerfile to build.
     image_name : str, default "tugboat"
         Name to assign to the built Docker image.

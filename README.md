@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://posit-dev.github.io/great-docs/">
-<img src="assets/tugboat-logo-py.png" alt="tugboat" width="350">
+<img src="assets/tugboat-logo-py.png" alt="tugboat" width="250">
 </a>
 </p>
 
@@ -16,9 +16,8 @@ shared via [Binder](https://mybinder.readthedocs.io/en/latest/index.html).
 tugboat uses the [pigar](https://github.com/damnever/pigar) package to automatically
 detect all the packages necessary to replicate your analysis and will generate
 a Dockerfile that contains an exact copy of your entire directory with all
-the packages installed. tugboat transforms an unstructured analysis folder into a `requirements.txt` file
-and constructs a Docker image that includes all your essential R packages
-based on this file. tugboat utilizes [uv](https://docs.astral.sh/uv/) under the hood;
+the essential Python packages installed. 
+tugboat uses [uv](https://docs.astral.sh/uv/) under the hood;
 as a result, projects that already utilize uv should be directly compatible with no
 additional setup.
 
@@ -103,7 +102,7 @@ Once the Dockerfile has been created, we can build the Docker image
 with the `build()` function. By default this will assume the Dockerfile
 is located in the current working directory. This function assumes a little knowledge
 about Docker; if you aren't sure where to start,
-[this is a great starting point](https://colinfay.me/docker-r-reproducibility/).
+[this is a great starting point](https://nsrc.org/workshops/2024/apricot-2024/virt/cloud-virt-ng/en/application-development/application-development.pdf).
 
 The following example will do the simplest thing and will build the
 image locally.
@@ -113,7 +112,7 @@ build(image_name="awesome_analysis")
 
 Suppose that, like above, your analysis directory is a sub-directory of
 your main project directory:
-```r
+```python
 build(
     dockerfile="./sub-directory",
     build_context="./sub-directory",
