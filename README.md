@@ -149,7 +149,7 @@ method) instead.
 
 ### Share your project via Binder
 
-Binder lets others instantly launch and interact with your R project in a
+Binder lets others instantly launch and interact with your project in a
 live, cloud-based environment with no local setup required. tugboat will
 prepare your project to be shared with Binder. The process is simple:
 
