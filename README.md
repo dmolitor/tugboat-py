@@ -151,23 +151,13 @@ method) instead.
 
 Binder lets others instantly launch and interact with your project in a
 live, cloud-based environment with no local setup required. tugboat will
-prepare your project to be shared with Binder. The process is simple:
-
-- First, create the Dockerfile from your analysis directory:
-
-    ``` python
-    create(
-        project=".",
-        exclude=["data/big_directory_1", "data/big_directory_2"]
-    )
-    ```
-
-- Then, prep your directory for Binder. Your analysis directory _must_ be
-a GitHub repository:
-
-    ``` python
-    binderize(branch="main")
-    ```
+prepare your project to be shared with Binder. The process is easy; simply
+prep your directory for Binder with the `binderize()` function:
+> [!NOTE]
+> Your analysis directory _must_ be a GitHub repository.
+``` python
+binderize(branch="main")
+```
 By default this will add a Binder badge to your README.md file if it already has a section for badges:
 
 ``` python
