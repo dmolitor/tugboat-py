@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://posit-dev.github.io/great-docs/">
+<a href="https://dmolitor.com/tugboat-py/">
 <img src="assets/tugboat-logo-py.png" alt="tugboat" width="250">
 </a>
 </p>

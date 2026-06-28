@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 import sys
 from typing import Any, List
@@ -42,7 +41,7 @@ def _dockerignore(project: str, exclude: List[str] | str | None = None) -> None:
 
 
 def create(
-    project: str = str(Path(".").resolve()),
+    project: str | Path = Path("."),
     FROM: str | None = None,
     exclude: List[str] | str | None = None,
     verbose: bool = False,
@@ -78,14 +77,18 @@ def create(
     -------
     None
     """
-    project = os.path.abspath(project)
+    project = Path(project).resolve()
     # Scan for dependencies and generate requirements.txt
-    _generate(project_path=project, **kwargs)
+    _generate(
+        requirement_file=str(project / "requirements-tugboat.txt"),
+        project_path=str(project),
+        **kwargs,
+    )
     # Generate .dockerignore
-    _dockerignore(project=project, exclude=exclude)
+    _dockerignore(project=str(project), exclude=exclude)
     # Generate Dockerfile
-    dock = _dockerfile(project=project, FROM=FROM)
+    dock = _dockerfile(project=str(project), FROM=FROM)
     if verbose:
         print(dock)
-    dockerfile_path = Path(project) / "Dockerfile"
+    dockerfile_path = project / "Dockerfile"
     dockerfile_path.write_text(dock)
